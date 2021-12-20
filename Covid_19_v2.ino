@@ -1,5 +1,6 @@
 #include <SoftwareSerial.h>
-
+//#include <PN532_SWHSU.h>
+//#include <PN532.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <PN532_I2C.h>
@@ -84,7 +85,7 @@ void mui_hai(String ten,String date1, String date2){
     lcd.setCursor(0, 2);
     lcd.print("Num 1th:");//
     lcd.print(date1);
-  lcd.setCursor(0, 3);
+    lcd.setCursor(0, 3);
     lcd.print("Num 2th:");
     lcd.print(date2);
     hai_mui();
@@ -113,19 +114,35 @@ void xuat_lcd(String uid) {
   const String name2 = "Tran Thi My Linh";
   const String name3 = "Vo Van Tung";
   
- 
+  //String name4 = "Vo Duc Huy";
   if(uid == "202217248165"){
-    mui_hai(name1,"23/10/21","03/12/2021");//code tiêm 2 mũi, có cú pháp là mui_hai(tên,ngày chích mũi 1,ngày chính mũi 2);
+    mui_hai(name1,"23/10/21","03/12/2021");
   }
   else if(uid == "18824524247"){
-    mui_mot(name2,"18/10/2021");//code tiêm 1 mũi, có cú pháp là mui_mot(tên,ngày chích mũi 1);
+    mui_mot(name2,"18/10/2021");
   }
   else if(uid == "262114921"){
-    mui_khong(name3);//code tiêm 0 mũi, có cú pháp là mui_khong(tên);
+    mui_khong(name3);
   }
   else if(uid == "436162234120114128"){
     mui_hai("Nhat Minh","25/10/2021","25/11/2021");
   }
+//  else {
+//
+//    lcd.clear();
+//    lcd.setCursor(4,1);
+//    lcd.print("NOT FOUND!");
+//    for (int i = 0; i < 2; i++) {
+//      digitalWrite(buzzer, LOW);
+//      delay(100);
+//      digitalWrite(buzzer, HIGH);
+//      delay(100);
+//    }
+//    waiting();
+//    //      tranform = "NONENONE";
+//    //      Serial.print(tranform);
+//  }
+}
 
 void waiting(){
   lcd.clear();
@@ -136,13 +153,13 @@ void waiting(){
 }
 
 void setup() {
-
+//  delay(1000);
   Serial.begin(115200);
   HCSerial.begin(9600);
   nfc.begin();
   lcd.init();
   lcd.backlight();
-
+//  delay(10000);
   uint32_t versiondata = nfc.getFirmwareVersion();
   
   if (! versiondata) {
@@ -161,9 +178,10 @@ void setup() {
 
   Serial.print('.'); Serial.println((versiondata>>8) & 0xFF, DEC);
 
-  
+  // Configure board to read RFID tags
 
   nfc.SAMConfig();
+ // nfc.SAMConfig();
  
   pinMode(red, OUTPUT);
   pinMode(green, OUTPUT);
@@ -186,7 +204,7 @@ void loop() {
   int check = 1;
 
   success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, &uid[0], &uidLength);
-
+//  Serial.print("test");
   while (!success)
   {
     delay(100);
