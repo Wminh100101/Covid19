@@ -84,6 +84,7 @@ void mui_hai(String ten,String date1, String date2){
     lcd.setCursor(0, 2);
     lcd.print("Num 1th:");//
     lcd.print(date1);
+  lcd.setCursor(0, 3);
     lcd.print("Num 2th:");
     lcd.print(date2);
     hai_mui();
