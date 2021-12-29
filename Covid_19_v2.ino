@@ -16,7 +16,13 @@ PN532_I2C pn532i2c(Wire);
 int red = A1;
 int green = A0;
 int buzzer = 10;
-
+void waiting(){
+  lcd.clear();
+  lcd.setCursor(2, 1);
+  lcd.print("Cham the ben duoi");
+  lcd.setCursor(2, 2);
+  lcd.print("");
+}
 void mot_mui() {
 
   digitalWrite(red, HIGH);
@@ -144,13 +150,7 @@ void xuat_lcd(String uid) {
 //  }
 }
 
-void waiting(){
-  lcd.clear();
-  lcd.setCursor(2, 1);
-  lcd.print("Cham the ben duoi");
-  lcd.setCursor(2, 2);
-  lcd.print("");
-}
+
 
 void setup() {
 //  delay(1000);
